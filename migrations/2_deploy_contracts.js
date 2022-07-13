@@ -1,5 +1,5 @@
-const cardContracts = artifacts.require("cardcreation")
+const CardItem = artifacts.require("CardItem")
 
 module.exports = function(deployer) {
-    deployer.deploy(cardcreation);
+    deployer.deploy(CardItem);
 }

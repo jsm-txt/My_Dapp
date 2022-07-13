@@ -14,14 +14,25 @@ contract CardItem is ERC721URIStorage {
     constructor() ERC721("GameCard", "Card") {
 
     }
+    uint256 newCardFee = 0.001 ether;
 
-    function awardCard(address player, string memory tokenURI) public returns (uint256){
+    function awardCard(address player, uint256 _cardId,  string memory tokenURI) public returns (uint256){
+        // _tokenIds = _generateRandomNumber();
+        require(msg.value == newCardFee);
+        if(_cardId){
+            _cardId.increment();
+            uint256 newItemId = _cardIds.current();
+            _mint(player, cardId);
+            _setTokenURI(newItemId, tokenURI);
+            return newItemId;
+        }
         _tokenIds.increment();
         uint256 newItemId = _tokenIds.current();
         _mint(player, newItemId);
         _setTokenURI(newItemId, tokenURI);
         return newItemId;
     }
+
 }
 
 // contract CardCreation is ERC721URIStorage {
@@ -49,8 +60,6 @@ contract CardItem is ERC721URIStorage {
 
 //     // Creates a new card with a name and ID
 //     function _createCard(string memory _name, uint256 _cardId) internal {
-//         require(to != address(0), "Erc 721 mint to zero address");
-//         require(!_exsits(cardId), "token already minted");
 //         uint256 id = card.push(Card(_name, _hp)) - 1;
 //         cardToOwner[id] = msg.sender;
 //         ownerCardCount[msg.sender] = ownerCardCount[msg.sender].add(1);
